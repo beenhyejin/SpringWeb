@@ -1,0 +1,41 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans"
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xsi:schemaLocation="http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans.xsd">
+
+	<!--core concern (주업무) -->
+	<bean id = "cal" class="com.newlecture.aop.spring.NewlecCalculator"/><!-- target -->
+
+	<!-- handler(보조 - 포함이 될수도 안될수도 있음) -->
+	<bean id = "handler" class="com.newlecture.aop.spring.LogHandler"/>
+	<bean id = "before" class="com.newlecture.aop.spring.BeforeHandlerHandler"/>
+	<bean id = "after" class="com.newlecture.aop.spring.AfterHandlerHandler"/>
+	<bean id = "throwing" class="com.newlecture.aop.spring.ThrowingHandlerHandler"/>
+	
+	<!-- Pointcuts	 -->
+	<bean id = "methodNamePointcut"
+		class="org.springframework.aop.support.NameMatchMethodPointcut">
+		<property name="mappedName" value ="add"/><!-- add만으로 하겟다 -->
+	</bean>
+	
+	<!-- Adviser -->
+	<bean id ="methodNameAdvisor" class = "org.springframework.aop.support.DefaultPointcutAdvisor">
+		<property name="pointcut" ref = "methodNamePointcut"/>
+		<property name ="advice" ref = "before"	/>
+	</bean>
+	
+	
+	<!-- proxy -->
+	<bean id="proxy" class="org.springframework.aop.framework.ProxyFactoryBean">
+		<property name="target" ref="cal"/>
+		<property name="interceptorNames"><!-- 열러개 가능 -->
+			<list>
+				<value>methodNameAdvisor</value>
+				<!-- <value>handler</value> --><!-- methodNameAdvisor사용하려고 주석 -->
+				<value>before</value>
+				<value>after</value>
+				<value>throwing</value><!-- x/y에서 y가 0일때 예외를 처리해주는 친구 -->
+			</list>
+		</property>
+	</bean>
+</beans>

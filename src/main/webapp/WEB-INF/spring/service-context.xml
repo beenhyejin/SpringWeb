@@ -1,0 +1,71 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans"
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xmlns:context="http://www.springframework.org/schema/context"
+	xmlns:tx="http://www.springframework.org/schema/tx"
+	xsi:schemaLocation="http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans.xsd
+		http://www.springframework.org/schema/context http://www.springframework.org/schema/context/spring-context-4.3.xsd
+		http://www.springframework.org/schema/tx http://www.springframework.org/schema/tx/spring-tx-4.3.xsd">
+   
+   <bean name="dataSource" class="org.springframework.jdbc.datasource.DriverManagerDataSource">
+     <property name="driverClassName" value="com.mysql.jdbc.Driver" />
+      <property name="url" value="jdbc:mysql://211.238.142.247/newlecture?autoReconnect=true&amp;useSSL=false&amp;characterEncoding=UTF-8" />
+      <property name="username" value="sist" />
+      <property name="password" value="cclass" />
+   </bean>
+   
+   <bean name = "template" class="org.springframework.jdbc.core.JdbcTemplate">
+   		<property name="dataSource" ref = "dataSource"/>
+   </bean>
+   <!-- Transaction을 처리하는 방법 4 Annotaion사용 -->
+   <tx:annotation-driven transaction-manager="transactionManager"/>
+   <!-- Transacion을 처리하는 방법 1 TransactionManager이용 -> 4 Annotation에서 재료로 사용 -->
+   <bean name="transactionManager" class="org.springframework.jdbc.datasource.DataSourceTransactionManager">
+   		<property name="dataSource" ref="dataSource"/>
+   </bean>
+   <!-- Transaciont을 처리하는 방법 2 transactionTemplate이용 -->
+   <!-- <bean name="transactionTemplate" class="org.springframework.transaction.support.TransactionTemplate">
+   		<property name="transactionManager" ref="transactionManager"></property>
+   </bean> -->
+   <!-- Transaction을 처리하는 방법 3 AOP이용 -->
+<!-- 	<bean name="transactionInterceptor"
+		class="org.springframework.transaction.interceptor.TransactionInterceptor">
+		<property name="transactionManager" ref="transactionManager" />
+		<property name="transactionAttributes">
+			<props>
+				<prop key="insert">PROPAGATION_REQUIRED</prop>
+			</props>
+		</property>
+	</bean>
+   <bean class="org.springframework.aop.framework.ProxyFactoryBean">
+   	<property name="target" ref="noticeDao"/>
+   	<property name="interceptorNames">
+   		<list>
+   			<value>transactionInterceptor</value>
+   		</list>
+   	</property>
+   </bean>
+    -->
+   <bean name="sqlSessionFactory" class="org.mybatis.spring.SqlSessionFactoryBean" ><!-- 공장 -->
+      <property name="dataSource" ref="dataSource" /> <!--db접속정보 injection  -->
+      <property name="mapperLocations" value="classpath:com/newlecture/webapp/dao/mybatis/mapper/*.xml" />
+
+   </bean>
+   
+   <bean class="org.mybatis.spring.SqlSessionTemplate"><!-- 공장에서 꺼내쓰기 -->
+      <constructor-arg index="0" ref="sqlSessionFactory" />
+   </bean>
+   
+   <!-- DAO객체들 -->
+   <!-- <bean class="com.newlecture.webapp.dao.mybatis.MyBatisNoticeDao"/> -->
+   <bean class="com.newlecture.webapp.dao.spring.SpringMemberDao"/>
+   <bean name="noticeDao" class="com.newlecture.webapp.dao.spring.SpringNoticeDao">
+   	<!-- 	<property name="template" ref="template"></property> -->
+   </bean>
+   <bean class="com.newlecture.webapp.dao.mybatis.MyBatisNoticeFileDao"/>
+   
+   <!-- Service 객체들 -->
+   <bean class="com.newlecture.webapp.service.admin.BoardService"></bean>
+   
+   <context:annotation-config />
+</beans>

@@ -1,0 +1,183 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="UTF-8">
+<title>Insert title here</title>
+<script type="text/javascript">
+/*    var json = [
+            {id:"1",title:"hello", "writerId":"newlec"},
+            {id:"2",title:"he34lo", "writerId":"new34lec"}
+            ];
+   alert(json[1].title);
+   alert(json[1]["title"]);
+   
+   alert("dfdf")
+   
+/*    var data = eval('({id:"1", title:"hello"})');
+   alert(data.title); */
+   /* var data = JSON.parse('{"id":"1", "title":"he34545454llo"}');
+   alert(typeof data.title); */
+   
+   /* var x = 3;
+   var y = new Number(3);  */
+    /* === 주소 비교 */
+    
+   // alert(a);  undifined 
+   //{var a=1} 
+    
+   /*  var data = {id:1, title:"hello", writerId:"newlec"};
+   
+   for(var i in data)
+      alert(data[i]);
+   
+   var add = function(){
+      var sum = 0;
+      for(var i=0; i<arguments.length; i++)
+         sum += arguments[i];
+      return sum;
+   };
+   alert(add(3,5,10)); */
+   
+   /* function f(){ 클로저~
+    var a=1;
+    
+    return fuction f1(){
+       return a;
+    }
+   }
+   varf1 = f();
+   var a = f1();
+   alert(a); */
+   
+   /* window.alert("hello"); */ /* window는 생략 가능 */
+   
+</script>
+
+<script type="text/javascript">
+//////////////////////////////////계산//////////////////////
+function calcApp(){
+   
+   var xText = document.getElementById("x");
+   var yText = document.getElementById("y");
+   var addButton = document.getElementById("add-button");
+   var resultText = document.getElementById("result");
+   addButton.onclick = addBtnClick;   
+   
+   function addBtnClick(){
+      
+      var x =parseInt(xText.value);
+      var y =parseInt(yText.value);
+      
+      resultText.value=x+y;
+   }
+}
+   window.onload = calcApp;
+   
+   ///////////////////////////////카운트///////////////////////
+   window.onload = function(){
+	   var countButton = document.getElementById("count-button");
+	   var countLabel = document.getElementById("count-label");
+	   var timerId = null;
+	   
+	   var ex1 = document.getElementById("ex1");
+	   ex1.style.marginTop = "0px";
+	   
+	   // setTimeout(test,1000)
+	   countButton.onclick = function(){
+				if(timerId == null)
+					timerId = setInterval(function(){
+						var count = parseInt(countLabel.textContent);
+						var marginTop = parseInt(ex1.style.marginTop);
+						
+						//목표치에 도달했을 경우
+						if(count<=0){
+							clearInterval(timerId);
+							timerId =null;
+						}
+						
+						if(marginTop>=100){
+							clearInterval(timerId);
+							timerId = null;
+						}
+				  		//parseInt(countLabel.textContent)-1;	
+				  		ex1.style.marginTop = (marginTop +1)+"px";
+					},30);
+	   };
+   };
+   
+   //------------------------open a window 예제--------------------------------------------
+
+   
+   window.onload = function() {
+	   var openButton = document.getElementById("open-button");
+	   var movButton = document.getElementById("mov-button");
+	   var win = null;
+	   var timerId= null;
+	   
+	   openButton.onclick = function(){
+		   if(win==null)
+			   	win = open("notice.html","_blank", "width=500px height=300px");
+	   };
+	   movButton.onclick = function(){
+		   win.moveBy(-10,0);
+		   /* if(timerId == null){
+			   setInterval(
+						if(win != null)
+							win.moveBy(-10,0);
+		   } */
+   
+	   };   
+   
+   }
+
+   //--------------------------iframe 예제--------------------------------------------
+/*      window.onload = function() {
+	   var naviButton = document.getElementById("nav-button");
+	   var win = window.frames[0];
+
+	   
+	   naviButton.onclick = function(){
+			   	win.location.href="http://www.newlecture.com";
+	   }; 
+   }
+ */
+
+	
+
+   
+   
+</script>
+</head>
+<body>
+	<!---------- iframe 예제------------->
+	<div>
+		<input id="nav-button"  type="button" value="페이지전환">
+		<iframe src="notice.html" style="width=1000px; height:300px"></iframe>
+	</div>
+		
+
+
+	<!---------- open a window 예제-------------->
+	<div>
+		<input id="open-button" type="button" value="새창띄우기"> <input
+			id="mov-button" type="button" value="왼쪽으로 이동">
+	</div>
+
+
+	<!-- --------Timer 예제--------------- -->
+	<p>
+		남은시간 <span id="count-label">60</span>초 <input id="count-button"
+			type="button" value="카운트 시작" />
+	</p>
+	<hr />
+
+	<!-- <input id="btn-print" type="button" value="출력" /> -->
+	<div id="ex1">
+		<input type="text" id="x" placeholder="x값을 입력하세요" /> <input
+			type="text" id="y" placeholder="y값을 입력하세요" /> <input type="button"
+			value="더하기" id="add-button" /> <input type="text" value=""
+			id="result" />
+	</div>
+</body>
+
+</html>

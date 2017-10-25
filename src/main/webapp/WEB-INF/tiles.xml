@@ -1,0 +1,63 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<!DOCTYPE tiles-definitions PUBLIC
+       "-//Apache Software Foundation//DTD Tiles Configuration 3.0//EN"
+       "http://tiles.apache.org/dtds/tiles-config_3_0.dtd">
+<tiles-definitions>
+	<definition name="home.*" template="/WEB-INF/views/inc/layout.jsp">
+		<put-attribute name="path" value="/" />
+		<put-attribute name="css" value="{1}.css" />
+		<put-attribute name="header" value="/WEB-INF/views/inc/header.jsp" />
+		<put-attribute name="main" value="/WEB-INF/views/{1}.jsp" />
+		<put-attribute name="footer" value="/WEB-INF/views/inc/footer.jsp" />
+	</definition>
+
+	<definition name="customer.*.*" template="/WEB-INF/views/inc/sub-layout.jsp">
+		<put-attribute name="path" value="customer" />
+		<put-attribute name="header" value="/WEB-INF/views/inc/header.jsp" />
+		<put-attribute name="aside"
+			value="/WEB-INF/views/customer/inc/aside.jsp" />
+		<put-attribute name="visual"
+			value="/WEB-INF/views/customer/inc/visual.jsp" />
+		<put-attribute name="main"
+			value="/WEB-INF/views/customer/{1}/{2}.jsp" />
+		<put-attribute name="footer" value="/WEB-INF/views/inc/footer.jsp" />
+	</definition>
+
+	<definition name="admin.*.*.*" template="/WEB-INF/views/inc/sub-layout.jsp">
+		<put-attribute name="path" value="admin/{1}" />
+		<put-attribute name="header" value="/WEB-INF/views/inc/header.jsp" />
+		<put-attribute name="aside" value="/WEB-INF/views/admin/inc/aside.jsp" />
+		<put-attribute name="visual"
+			value="/WEB-INF/views/admin/inc/visual.jsp" />
+		<put-attribute name="main"
+			value="/WEB-INF/views/admin/{1}/{2}/{3}.jsp" />
+		<put-attribute name="footer" value="/WEB-INF/views/inc/footer.jsp" />
+	</definition>
+
+	<definition name="member.*" template="/WEB-INF/views/inc/layout.jsp">
+		<put-attribute name="path" value="/" />
+		<put-attribute name="css" value="{1}.css" />
+		<put-attribute name="header" value="/WEB-INF/views/inc/header.jsp" />
+		<put-attribute name="aside" value="/WEB-INF/views/member/inc/aside.jsp" />
+		<put-attribute name="visual"
+			value="/WEB-INF/views/member/inc/visual.jsp" />
+		<put-attribute name="main" value="/WEB-INF/views/member/{1}.jsp" />
+		<put-attribute name="footer" value="/WEB-INF/views/inc/footer.jsp" />
+	</definition>
+
+<!-- 	<definition name="*.*" template="/WEB-INF/views/inc/layout.jsp">
+		<put-attribute name="path" value="/" />
+		<put-attribute name="css" value="{2}.css" />
+		<put-attribute name="header" value="/WEB-INF/views/inc/header.jsp" />
+		<put-attribute name="main" value="/WEB-INF/views/{1}/{2}.jsp" />
+		<put-attribute name="footer" value="/WEB-INF/views/inc/footer.jsp" />
+	</definition> -->
+
+
+
+
+
+
+
+</tiles-definitions>
